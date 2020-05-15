@@ -3,26 +3,17 @@ package com.company.enroller.persistence;
 
 
 import java.util.Collection;
-
-
-
 import org.hibernate.Session;
-
 import org.hibernate.Transaction;
-
 import org.springframework.stereotype.Component;
-
-
-
 import com.company.enroller.model.Participant;
-
 
 
 @Component("participantService")
 
 public class ParticipantService {
 
-	Session session;
+	private Session session;
 
 	public ParticipantService() {
 		session = DatabaseConnector.getInstance().getSession();
@@ -48,4 +39,12 @@ public class ParticipantService {
 		session.delete(participant);
 		transaction.commit();
 	}
+	
+	public Participant update(Participant participant) {
+        Transaction transaction = this.session.beginTransaction();
+        session.update(participant);
+        transaction.commit();
+        return participant;
+    }
+	
 }
